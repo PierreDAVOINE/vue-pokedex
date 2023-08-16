@@ -7,5 +7,4 @@ import Header from './components/Header.vue'
 </template>
 
 <style scoped lang="scss">
-$color : #368ff4;
 </style>
