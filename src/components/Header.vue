@@ -36,16 +36,11 @@ header {
     @media screen and (min-width: 700px) {
       font-size: 2rem;
     }
-    @media screen and (min-width: 1000px) {
-      font-size: 2.5rem;
-      right: 3rem;
-      top: 0.5rem;
-    }
   }
 }
 
 .header_bg {
-  background: no-repeat url(public/img/header.png) center top / contain;
+  background: no-repeat url(/img/header.png) center top / contain;
   width: 100%;
   margin: 0 auto;
   height: 30vh;
@@ -53,8 +48,8 @@ header {
   @media screen and (min-width: 768px) {
     height: 23vh;
   }
-  @media screen and (min-width: 1180px) {
-    width: 1180px;
+  @media screen and (min-width: 850px) {
+    width: 850px;
   }
 }
 
