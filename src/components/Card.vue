@@ -1,13 +1,19 @@
 <script setup lang="ts">
-
+import { Pokemon } from '../@types/Pokemons';
+defineProps({
+    pokemon: {
+        type: Object as () => Pokemon,
+        required: true
+    }
+});
 
 
 </script>
 
 <template>
     <div class="card">
-        <!-- <img :src="pokemon.image" :alt="pokemon.id"> -->
-        <!-- <h2>{{ pokemon.name }}</h2> -->
+        <img :src="pokemon.image" :alt="pokemon.name">
+        <h2>{{ pokemon.name }}</h2>
         <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
         </p>
@@ -16,7 +22,7 @@
 
 <style scoped lang="scss">
 .card {
-    background-color: #ec7373;
+    background-color: #eaeaea;
     border-radius: 10px;
     box-shadow: 0 3px 15px rgba(100, 100, 100, 0.2);
     padding: 1rem;

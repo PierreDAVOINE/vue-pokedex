@@ -36,7 +36,7 @@ header {
 }
 
 .header_bg {
-  background: no-repeat url(/img/header.png) center top / contain;
+  background: no-repeat url(/img/header.png) center top / contain, #ec1d23;
   width: 100%;
   margin: 0 auto;
   height: 30vh;

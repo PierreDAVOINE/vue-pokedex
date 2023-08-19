@@ -1,21 +1,19 @@
 <script setup lang="ts">
 import Card from './Card.vue'
-
-// On récupère les pokemons via les props
-const props = defineProps({
+import { Pokemon } from '../@types/Pokemons';
+defineProps({
     pokemons: {
-        type: Array,
+        type: Array as () => Pokemon[],
         required: true
     }
-})
+});
 
 </script>
 
 <template>
     <main>
         <div class="cards_container">
-            <!-- Pour chaque pokemons on appel le composant Card -->
-            <Card v-for="pokemon in props.pokemons" :key="pokemon.name" :pokemon="pokemon" />
+            <Card v-for="pokemon in pokemons" :key="pokemon.name" :pokemon="pokemon" />
         </div>
 
     </main>
@@ -30,5 +28,6 @@ const props = defineProps({
     margin: 0 auto;
     width: 100%;
     max-width: 850px;
+    background-color: #ec1d23;
 }
 </style>
