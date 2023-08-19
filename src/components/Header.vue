@@ -1,26 +1,20 @@
 <script setup lang="ts">
-
-defineProps<{ title: string }>()
-
 </script>
 
 <template>
   <header>
     <div class="header_bg">
-      <h1>{{ title }}</h1>
+      <h1>Pokedex with Vue JS</h1>
 
     </div>
 
   </header>
-
-
 </template>
 
 <style scoped lang="scss">
-
 header {
   // padding: 10px;
-  
+
   h1 {
     font-size: 1rem;
     margin: 0;
@@ -30,9 +24,11 @@ header {
     position: absolute;
     top: 0.1rem;
     right: 1rem;
+
     @media screen and (min-width: 500px) {
       font-size: 1.5rem;
     }
+
     @media screen and (min-width: 700px) {
       font-size: 2rem;
     }
@@ -45,12 +41,13 @@ header {
   margin: 0 auto;
   height: 30vh;
   position: relative;
+
   @media screen and (min-width: 768px) {
     height: 23vh;
   }
+
   @media screen and (min-width: 850px) {
     width: 850px;
   }
 }
-
 </style>
