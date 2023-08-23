@@ -8,16 +8,13 @@ defineProps({
 });
 
 
-</script>
+</script> 
 
 <template>
-    <div class="card">
+    <router-link class="card" to="/pokemon">
         <img :src="pokemon.image" :alt="pokemon.name">
         <h2>{{ pokemon.name }}</h2>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
-        </p>
-    </div>
+    </router-link>
 </template>
 
 <style scoped lang="scss">
@@ -31,7 +28,6 @@ defineProps({
     justify-content: space-between;
     align-items: center;
     transition: all 0.3s ease-in-out;
-    cursor: pointer;
 
     &:hover {
         transform: scale(1.05);
@@ -50,6 +46,7 @@ defineProps({
         color: #333;
         font-weight: 700;
         text-align: center;
+        text-decoration: none;
     }
 
     p {
