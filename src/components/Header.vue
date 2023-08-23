@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+// import { ref } from 'vue';
+import SearchForm from './SearchForm.vue';
 
 // On récupére la props inputSearch
 const props = defineProps({
@@ -9,31 +10,13 @@ const props = defineProps({
   },
 });
 
-// On déclare la fonction update:inputSearch
 // emit permet d'envoyer un événement au parent
+// ici on fait le relais entre le composant searchForm et le composant App
 const emit = defineEmits(['update:inputSearch']);
-
-// On déclare une variable inputValue qui est une référence à la props inputSearch
-const inputValue = ref(props.inputSearch);
-
-// updateInputSearch permet de mettre à jour la props inputSearch
-const updateInputSearch = (event: Event) => {
-  const newValue = (event.target as HTMLInputElement).value;
-  inputValue.value = newValue;
-  // ici on emet l'evenement update:inputSearch avec la nouvelle valeur
+const updateInputSearch = (newValue: string) => {
+  // Dès qu'on détecte un changement dans l'input on fait remonter l'info plus haut
   emit('update:inputSearch', newValue);
-};
-
-// handleReset permet de remettre à zéro la props inputSearch et donc de reset la recherche
-const handleReset = () => {
-  inputValue.value = '';
-  emit('update:inputSearch', '');
-};
-
-// handleSubmit permet d'éviter le rechargement de la page lors de la soumission du formulaire
-const handleSubmit = (event: Event) => {
-  event.preventDefault();
-};
+}
 </script>
 
 <template>
@@ -42,12 +25,8 @@ const handleSubmit = (event: Event) => {
       <h1>Pokedex with Vue JS</h1>
     </div>
 
-    <form v-on:submit="handleSubmit">
-      <input type="text" :value="props.inputSearch" @input="(e) => updateInputSearch(e)" placeholder="Search a pokemon" />
-      <button v-if="props.inputSearch.length > 0" v-on:click="handleReset">
-        <img src="../assets/icons8-annuler.svg" alt="annuler">
-      </button>
-    </form>
+    <SearchForm :inputSearch="props.inputSearch" @update:inputSearch="updateInputSearch" />
+
   </header>
 </template>
 
@@ -72,44 +51,6 @@ header {
 
     @media screen and (min-width: 700px) {
       font-size: 2rem;
-    }
-  }
-
-  form {
-    position: relative;
-    margin: 0 auto;
-    width: 100%;
-    max-width: 850px;
-    padding: 1rem;
-    background-color: #ec1d23;
-
-    input {
-      width: 100%;
-      padding: 0.5rem;
-      border-radius: 5px;
-      border: none;
-      outline: none;
-      font-size: 1rem;
-      font-weight: 400;
-      color: #333;
-      box-shadow: 0 3px 15px rgba(100, 100, 100, 0.2);
-
-      @media screen and (min-width: 500px) {
-        font-size: 1.5rem;
-      }
-
-      @media screen and (min-width: 700px) {
-        font-size: 2rem;
-      }
-    }
-
-    button {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: none;
-      border: none;
-      cursor: pointer;
     }
   }
 }

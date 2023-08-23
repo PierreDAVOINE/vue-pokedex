@@ -135,9 +135,11 @@ table {
 /* GENERALS */
 
 body {
+  width: 100vw;
+  height: 100vh;
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
   line-height: 1.5;
   color: #333;
-  background-color: #fff;
+  background: no-repeat url('./assets/bg-day.png') center top / cover;
 }

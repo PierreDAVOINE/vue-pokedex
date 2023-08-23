@@ -37,7 +37,7 @@ const handleSubmit = (event: Event) => {
 </script>
 
 <template>
-  <form v-on:submit="handleSubmit">
+  <form class="searchForm" v-on:submit="handleSubmit">
     <input type="text" :value="props.inputSearch" @input="(e) => updateInputSearch(e)" placeholder="Search a pokemon" />
     <button v-if="props.inputSearch.length > 0" v-on:click="handleReset">
       <img src="../assets/icons8-annuler.svg" alt="annuler">
@@ -45,4 +45,42 @@ const handleSubmit = (event: Event) => {
   </form>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.searchForm {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 850px;
+  padding: 1rem;
+  background-color: #ec1d23;
+
+  input {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #333;
+    box-shadow: 0 3px 15px rgba(100, 100, 100, 0.2);
+
+    @media screen and (min-width: 500px) {
+      font-size: 1.5rem;
+    }
+
+    @media screen and (min-width: 700px) {
+      font-size: 2rem;
+    }
+  }
+
+  button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+}
+</style>
