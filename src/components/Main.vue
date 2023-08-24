@@ -6,13 +6,20 @@ defineProps({
         type: Array as () => Pokemon[]
     }
 });
+
+const emit = defineEmits(['update:pokemonPage']);
+const updatePokemonPage = (newValue: Pokemon) => {
+    emit('update:pokemonPage', newValue);
+}
+
 </script>
 
 <template>
     <main>
         <h2 v-if="pokemons && pokemons.length < 1">Chargement des cartes en cours</h2>
         <div v-else class="cards_container">
-            <Card v-for="pokemon in pokemons" :key="pokemon.name" :pokemon="pokemon" />
+            <Card v-for="pokemon in pokemons" :key="pokemon.name" :pokemon="pokemon"
+                v-on:click="updatePokemonPage(pokemon)" />
         </div>
     </main>
 </template>
