@@ -11,7 +11,7 @@ export interface Pokemon {
   apiResistances: Resistance[];
   resistanceModifyingAbilitiesForApi: any[];
   apiEvolutions: Evolution[];
-  apiPreEvolution: PreEvolution;
+  apiPreEvolution: PreEvolution[];
   apiResistancesWithAbilities: any[];
 }
 
