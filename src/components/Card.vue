@@ -11,7 +11,7 @@ defineProps({
 </script> 
 
 <template>
-    <router-link class="card" to="/pokemon">
+    <router-link class="card" :to="{ name: 'pokemon', params: { slugName: pokemon.slug } }">
         <img :src="pokemon.image" :alt="pokemon.name">
         <h2>{{ pokemon.name }}</h2>
     </router-link>

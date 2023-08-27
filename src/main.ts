@@ -18,7 +18,7 @@ const routes = [
     name: 'home',
     component: Main,
   },
-  { path: '/pokemon', name: 'pokemon', component: PokemonPage },
+  { path: '/pokemon/:slugName', name: 'pokemon', component: PokemonPage },
 ];
 
 // 3. Create the router instance and pass the `routes` option

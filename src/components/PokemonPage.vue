@@ -1,26 +1,33 @@
 <script setup lang="ts">
 import { Pokemon } from '../@types/Pokemons';
-defineProps({
+import { onMounted } from 'vue';
+const props = defineProps({
     pokemon: {
         type: Object as () => Pokemon,
         required: true
     }
 });
 
-// TODO: ajouter le slug dans l'URL
+// Au chargement du composant, on récupére les infos du pokemon si elles sont manquantes
+onMounted(() => {
+    // on vérifie si l'objet pokemon est vide
+    if (Object.keys(props.pokemon).length === 0) {
+        // si c'est le cas on récupére le slugName dans l'url
+        const slugName = props.$slugName.params.slugName;
+        const response = fetch(`https://pokebuildapi.fr/api/v1/pokemon/${slugName}`);
+        const data = response.json();
+        props.pokemon.value = data;
+    }
+})
 </script> 
 <template>
     <div class="pokemon">
         <div class="pokemon__introduction">
             <h2>{{ pokemon.name }}</h2>
             <img :src="pokemon.image" :alt="pokemon.name">
-        </div>
-        <div class="pokemon__types">
-            <h2>Types :</h2>
-            <ul>
-                <li v-for="type in pokemon.apiTypes" :key="type.name">{{ type.name }} - <img :src="type.image"
-                        :alt="type.name"></li>
-            </ul>
+            <div class="types">
+                <img v-for="type in pokemon.apiTypes" :key="type.name" :src="type.image" :alt="type.name">
+            </div>
         </div>
 
         <div class="pokemon__ stats">
@@ -36,6 +43,14 @@ defineProps({
         </div>
 
         <div class="pokemon__evolutions">
+            <h2>Pré évolution :</h2>
+            <ul v-if="pokemon.apiPreEvolution">
+                <li>{{ pokemon.apiPreEvolution.name }}</li>
+            </ul>
+            <p v-else>Aucune pré-évolution</p>
+        </div>
+
+        <div class="pokemon__evolutions">
             <h2>Evolution :</h2>
             <ul v-if="pokemon.apiEvolutions">
                 <li v-for="evolution in pokemon.apiEvolutions" :key="evolution.name">{{ evolution.name }}</li>
@@ -43,22 +58,22 @@ defineProps({
             <p v-else>Aucune évolution</p>
         </div>
 
-        <div class="pokemon__evolutions">
-            <h2>Pré évolution :</h2>
-            <ul v-if="pokemon.apiPreEvolution">
-                <li v-for="preEvolution in pokemon.apiPreEvolution" :key="preEvolution.name">{{ preEvolution.name }}</li>
-            </ul>
-            <p v-else>Aucune pré-évolution</p>
-        </div>
-
     </div>
 </template>
 
 <style scoped lang="scss">
 .pokemon {
-    width: 80%;
+    width: 50%;
     margin: 0 auto;
     background-color: rgba(218, 225, 225, 0.672);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+
+    div {
+        width: 35%;
+    }
 
     h2 {
         color: rgb(234, 38, 38);
@@ -78,6 +93,22 @@ defineProps({
             width: 200px;
             height: 200px;
         }
+
+        .types {
+            display: flex;
+            gap: 1rem;
+
+            ul {
+                display: flex;
+                gap: 1rem;
+            }
+
+            img {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
     }
 
     &__types,
