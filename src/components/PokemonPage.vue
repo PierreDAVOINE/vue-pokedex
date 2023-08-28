@@ -1,27 +1,44 @@
 <script setup lang="ts">
+
 import { Pokemon } from '../@types/Pokemons';
-import { onMounted } from 'vue';
+import { onBeforeMount, onMounted, ref } from 'vue';
+import { RouteLocationNormalizedLoaded, useRoute } from 'vue-router';
+
 const props = defineProps({
     pokemon: {
         type: Object as () => Pokemon,
-        required: true
     }
 });
 
-// Au chargement du composant, on récupére les infos du pokemon si elles sont manquantes
-onMounted(() => {
-    // on vérifie si l'objet pokemon est vide
-    if (Object.keys(props.pokemon).length === 0) {
-        // si c'est le cas on récupére le slugName dans l'url
-        const slugName = props.$slugName.params.slugName;
-        const response = fetch(`https://pokebuildapi.fr/api/v1/pokemon/${slugName}`);
-        const data = response.json();
-        props.pokemon.value = data;
+const slugName = ref('' as string);
+
+// Préparation de la mise à jour du state pokemonPage
+const emit = defineEmits(['update:pokemonPage']);
+const updatePokemonPage = (newValue: Pokemon) => {
+    emit('update:pokemonPage', newValue);
+}
+
+// Au chargement du composant on récupére le slugName dans l'url
+onBeforeMount(function () {
+    const route = useRoute() as RouteLocationNormalizedLoaded;
+    slugName.value = route.params.slugName as string;
+})
+
+// après le chargement du composant, on récupére les infos du pokemon si elles sont manquantes
+onMounted(async () => {
+    // Si le pokemon n'existe pas dans le state, on le récupére
+    if (props.pokemon && Object.keys(props.pokemon).length === 0) {
+        const response = await fetch(`https://pokebuildapi.fr/api/v1/pokemon/${slugName.value}`);
+        const data = await response.json();
+        updatePokemonPage(data)
     }
 })
+
 </script> 
+
 <template>
-    <div class="pokemon">
+    <h2 v-if="!pokemon || Object.keys(pokemon).length === 0">Récupération des informations du pokemon en cours</h2>
+    <div v-else class="pokemon">
         <div class="pokemon__introduction">
             <h2>{{ pokemon.name }}</h2>
             <img :src="pokemon.image" :alt="pokemon.name">

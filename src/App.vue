@@ -15,7 +15,6 @@ const getPokemons = async () => {
     const data = await response.json();
     pokemons.value = data;
     pokemonFiltered.value = data;
-    console.log(data);
   } catch (error) {
     console.log(error);
   }
