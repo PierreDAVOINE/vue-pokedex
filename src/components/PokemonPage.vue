@@ -1,8 +1,8 @@
 <script setup lang="ts">
 
 import { Pokemon } from '../@types/Pokemons';
-import { onBeforeMount, onMounted, ref } from 'vue';
-import { RouteLocationNormalizedLoaded, useRoute } from 'vue-router';
+import { onBeforeMount, ref } from 'vue';
+import { RouteLocationNormalizedLoaded, useRoute, useRouter } from 'vue-router';
 
 const props = defineProps({
     pokemon: {
@@ -10,7 +10,10 @@ const props = defineProps({
     }
 });
 
-const slugName = ref('' as string);
+const pokemonId = ref(0 as number);
+
+const router = useRouter();
+const route = useRoute() as RouteLocationNormalizedLoaded;
 
 // Préparation de la mise à jour du state pokemonPage
 const emit = defineEmits(['update:pokemonPage']);
@@ -18,26 +21,36 @@ const updatePokemonPage = (newValue: Pokemon) => {
     emit('update:pokemonPage', newValue);
 }
 
-// Au chargement du composant on récupére le slugName dans l'url
-onBeforeMount(function () {
-    const route = useRoute() as RouteLocationNormalizedLoaded;
-    slugName.value = route.params.slugName as string;
-})
-
-// après le chargement du composant, on récupére les infos du pokemon si elles sont manquantes
-onMounted(async () => {
+// Au chargement du composant on récupére l'id dans l'url
+onBeforeMount(() => {
+    pokemonId.value = Number(route.params.id);
     // Si le pokemon n'existe pas dans le state, on le récupére
     if (props.pokemon && Object.keys(props.pokemon).length === 0) {
-        const response = await fetch(`https://pokebuildapi.fr/api/v1/pokemon/${slugName.value}`);
-        const data = await response.json();
-        updatePokemonPage(data)
+        getPokemonData();
     }
 })
+
+// getPokemonData permet de récupérer les données du pokemon
+const getPokemonData = async () => {
+    try {
+        const response = await fetch(`https://pokebuildapi.fr/api/v1/pokemon/${pokemonId.value}`);
+        // Si aucun pokemon n'a été trouvé on redirige vers la 404
+        if (!response.ok) {
+            router.push({ name: 'NotFound' });
+        } else {
+            const data = await response.json();
+            updatePokemonPage(data)
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 </script> 
 
 <template>
-    <h2 v-if="!pokemon || Object.keys(pokemon).length === 0">Récupération des informations du pokemon en cours</h2>
+    <h2 class="waiting__title" v-if="!pokemon || Object.keys(pokemon).length === 0">Récupération des informations du pokemon
+        en cours</h2>
     <div v-else class="pokemon">
         <div class="pokemon__introduction">
             <h2>{{ pokemon.name }}</h2>
@@ -79,6 +92,13 @@ onMounted(async () => {
 </template>
 
 <style scoped lang="scss">
+.waiting__title {
+    color: rgb(189, 0, 222);
+    font-size: 3rem;
+    font-weight: 700;
+    text-align: center;
+}
+
 .pokemon {
     width: 50%;
     margin: 0 auto;
