@@ -1,6 +1,6 @@
-# Pokedex en Vue JS
+#  Pokedex en Vue JS
 
-## Projet
+##  Projet
 
 L'objectif de ce projet est de réaliser un pokedex avec un style un peu rétro / dessin.
 
