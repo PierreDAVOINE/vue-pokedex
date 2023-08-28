@@ -22,7 +22,9 @@ const updateInputSearch = (newValue: string) => {
 <template>
   <header>
     <div class="header_bg">
-      <h1>Pokedex with Vue JS</h1>
+      <router-link class="card" to="/">
+        <h1>Pokedex with Vue JS</h1>
+      </router-link>
     </div>
 
     <SearchForm :inputSearch="props.inputSearch" @update:inputSearch="updateInputSearch" />
