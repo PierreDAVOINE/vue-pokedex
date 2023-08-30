@@ -100,7 +100,7 @@ const getPokemonData = async () => {
 }
 
 .pokemon {
-    width: 50%;
+    width: 850px;
     margin: 0 auto;
     background-color: rgba(218, 225, 225, 0.672);
     display: flex;
@@ -109,12 +109,13 @@ const getPokemonData = async () => {
     gap: 1rem;
 
     div {
-        width: 35%;
+        width: 45%;
+        padding: 1rem;
     }
 
     h2 {
         color: rgb(234, 38, 38);
-        font-size: 3rem;
+        font-size: 2rem;
         font-weight: 700;
         text-align: center;
     }
@@ -148,10 +149,14 @@ const getPokemonData = async () => {
 
     }
 
+    &__evolutions {
+        text-align: center;
+    }
+
     &__types,
     &__stats,
     &__evolutions {
-        margin-bottom: 2rem;
+        // margin-bottom: 2rem;
     }
 }
 </style>

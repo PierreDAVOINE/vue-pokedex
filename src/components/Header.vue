@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// import { ref } from 'vue';
 import SearchForm from './SearchForm.vue';
 
 // On récupére la props inputSearch
@@ -35,6 +34,7 @@ const updateInputSearch = (newValue: string) => {
 <style scoped lang="scss">
 header {
   max-width: 850px;
+  // width: 70%;
   margin: 0 auto;
 
   h1 {
@@ -58,14 +58,16 @@ header {
 }
 
 .header_bg {
-  background: no-repeat url(/img/header.png) center top / contain, #ec1d23;
+  background: no-repeat url(/img/header.png) center top /cover, #ec1d23;
   width: 100%;
   margin: 0 auto;
-  height: 6vh;
+  height: 16vh;
   position: relative;
+  border-top-right-radius: 25px;
+  border-top-left-radius: 25px;
 
   @media screen and (min-width: 720px) {
-    height: 16vh;
+    height: 21vh;
   }
 
   @media screen and (min-width: 850px) {
