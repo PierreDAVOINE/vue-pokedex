@@ -45,8 +45,15 @@ const updatePokemonPage = (newValue: Pokemon) => {
 </script>
 
 <template>
-  <Header :inputSearch="inputSearch" @update:inputSearch="updateInputSearch" />
-  <router-view :pokemons="pokemonFiltered" :pokemon="pokemonPage" @update:pokemonPage="updatePokemonPage"></router-view>
+  <div class="app">
+    <Header :inputSearch="inputSearch" @update:inputSearch="updateInputSearch" />
+    <router-view :pokemons="pokemonFiltered" :pokemon="pokemonPage" @update:pokemonPage="updatePokemonPage"></router-view>
+  </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.app {
+  height: 100vh;
+  overflow: hidden;
+}
+</style>

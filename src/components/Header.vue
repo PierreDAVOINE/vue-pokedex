@@ -34,7 +34,6 @@ const updateInputSearch = (newValue: string) => {
 <style scoped lang="scss">
 header {
   max-width: 850px;
-  // width: 70%;
   margin: 0 auto;
 
   h1 {
@@ -65,9 +64,12 @@ header {
   position: relative;
   border-top-right-radius: 25px;
   border-top-left-radius: 25px;
+  border-top: 7px solid black;
+  border-right: 7px solid black;
+  border-left: 7px solid black;
 
   @media screen and (min-width: 720px) {
-    height: 21vh;
+    height: 22vh;
   }
 
   @media screen and (min-width: 850px) {

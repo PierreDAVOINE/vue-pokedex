@@ -53,6 +53,8 @@ const handleSubmit = (event: Event) => {
   max-width: 850px;
   padding: 1rem;
   background-color: #ec1d23;
+  border-right: 7px solid black;
+  border-left: 7px solid black;
 
   input {
     width: 100%;

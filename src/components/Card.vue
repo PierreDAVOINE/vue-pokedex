@@ -28,6 +28,7 @@ defineProps({
     justify-content: space-between;
     align-items: center;
     transition: all 0.3s ease-in-out;
+    // width: 80%;
 
     &:hover {
         transform: scale(1.05);
