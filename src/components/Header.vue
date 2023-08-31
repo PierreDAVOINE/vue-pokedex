@@ -57,10 +57,10 @@ header {
 }
 
 .header_bg {
-  background: no-repeat url(/img/header.png) center top /cover, #ec1d23;
+  background: no-repeat url(/img/header.png) center top /contain, #ec1d23;
   width: 100%;
   margin: 0 auto;
-  height: 16vh;
+  height: 5rem;
   position: relative;
   border-top-right-radius: 25px;
   border-top-left-radius: 25px;
@@ -68,8 +68,17 @@ header {
   border-right: 7px solid black;
   border-left: 7px solid black;
 
-  @media screen and (min-width: 720px) {
-    height: 22vh;
+  @media screen and (min-width: 451px) {
+    height: 7rem;
+  }
+
+  @media screen and (min-width: 620px) {
+    height: 8rem;
+  }
+
+  @media screen and (min-width: 705px) {
+    background: no-repeat url(/img/header.png) center top /cover, #ec1d23;
+    height: 144px;
   }
 
   @media screen and (min-width: 850px) {
