@@ -7,6 +7,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  isSearchOpen: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 // On déclare la fonction update:inputSearch
@@ -38,7 +42,9 @@ const handleSubmit = (event: Event) => {
 
 <template>
   <form class="searchForm" v-on:submit="handleSubmit">
+
     <input type="text" :value="props.inputSearch" @input="(e) => updateInputSearch(e)" placeholder="Search a pokemon" />
+
     <button v-if="props.inputSearch.length > 0" v-on:click="handleReset">
       <img src="../assets/icons8-annuler.svg" alt="annuler">
     </button>

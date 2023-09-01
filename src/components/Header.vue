@@ -7,27 +7,41 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  isSearchOpen: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 // emit permet d'envoyer un événement au parent
 // ici on fait le relais entre le composant searchForm et le composant App
-const emit = defineEmits(['update:inputSearch']);
+const emit = defineEmits(['update:inputSearch', 'update:isSearchOpen']);
+
 const updateInputSearch = (newValue: string) => {
   // Dès qu'on détecte un changement dans l'input on fait remonter l'info plus haut
   emit('update:inputSearch', newValue);
+}
+const handleOpenSearch = () => {
+  // Dès qu'on clique sur le bouton on fait remonter l'info plus haut
+  emit('update:isSearchOpen');
+  emit('update:inputSearch', "");
 }
 </script>
 
 <template>
   <header>
+    <button class="button__search" @click="handleOpenSearch">
+      <img src="../assets/glass.png" alt="Recherche">
+    </button>
     <div class="header_bg">
       <router-link class="card" to="/">
         <h1>Pokedex with Vue JS</h1>
       </router-link>
     </div>
 
-    <SearchForm :inputSearch="props.inputSearch" @update:inputSearch="updateInputSearch" />
-
+    <!-- TODO: trouver un moyen de d'adoucir la transition -->
+    <SearchForm v-if="isSearchOpen" :inputSearch="props.inputSearch" @update:inputSearch="updateInputSearch"
+      :isSearchOpen="isSearchOpen" />
   </header>
 </template>
 
@@ -35,6 +49,7 @@ const updateInputSearch = (newValue: string) => {
 header {
   max-width: 850px;
   margin: 0 auto;
+  position: relative;
 
   h1 {
     font-size: 1rem;
@@ -52,6 +67,40 @@ header {
 
     @media screen and (min-width: 700px) {
       font-size: 2rem;
+    }
+  }
+
+  .button__search {
+    background: none;
+    border: none;
+    position: absolute;
+    top: 4.5rem;
+    left: 27%;
+    cursor: pointer;
+    z-index: 10;
+
+    img {
+      width: 2rem;
+      height: 2rem;
+
+      &:hover {
+        transform: scale(1.1);
+        filter: drop-shadow(0 0 0.75rem white);
+      }
+    }
+
+    @media screen and (min-width: 500px) {
+      img {
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+    }
+
+    @media screen and (min-width: 700px) {
+      img {
+        width: 3rem;
+        height: 3rem;
+      }
     }
   }
 }
