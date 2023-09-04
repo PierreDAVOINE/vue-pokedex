@@ -14,6 +14,12 @@ defineProps({
     <router-link class="card" :to="{ name: 'pokemon', params: { slugName: pokemon.slug, id: pokemon.id } }">
         <img :src="pokemon.image" :alt="pokemon.name">
         <h2>{{ pokemon.name }}</h2>
+        <div class="card__types">
+            <figure v-for="type in pokemon.apiTypes">
+                <img :key="type.name" :src="type.image" :alt="type.name">
+                <figcaption>{{ type.name }}</figcaption>
+            </figure>
+        </div>
     </router-link>
 </template>
 
@@ -38,7 +44,6 @@ defineProps({
     img {
         width: 100%;
         max-width: 150px;
-        margin-bottom: 1rem;
     }
 
     h2 {
@@ -56,6 +61,42 @@ defineProps({
         color: #333;
         font-weight: 400;
         text-align: center;
+    }
+
+    &__types {
+        display: flex;
+        gap: 1rem;
+        position: relative;
+        height: 40px;
+
+        figure {
+            position: relative;
+        }
+
+        img {
+            width: 50px;
+            height: 50px;
+
+            &:hover {
+                transform: scale(1.1);
+                filter: drop-shadow(0 0 0.75rem black);
+            }
+        }
+
+        figcaption {
+            display: none;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: white;
+            position: absolute;
+            top: -1rem;
+            left: 50%;
+            text-shadow: 0 0 0.5rem black;
+        }
+
+        figure:hover figcaption {
+            display: block;
+        }
     }
 }
 </style>
