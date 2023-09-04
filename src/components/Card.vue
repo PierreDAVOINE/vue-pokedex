@@ -90,7 +90,7 @@ defineProps({
             color: white;
             position: absolute;
             top: -1rem;
-            left: 50%;
+            left: -0.5rem;
             text-shadow: 0 0 0.5rem black;
         }
 
