@@ -16,7 +16,7 @@ const routes = [
     name: 'home',
     component: Main,
   },
-  { path: '/pokemon/:slugName/:id', name: 'pokemon', component: PokemonPage },
+  { path: '/pokemon/:slugName', name: 'pokemon', component: PokemonPage },
   { path: '/404', name: 'NotFound', component: NotFound },
   { path: '/:catchAll(.*)', redirect: '/404' }, // Redirection pour toutes les autres URL
 ];

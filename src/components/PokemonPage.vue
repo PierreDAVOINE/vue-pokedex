@@ -1,10 +1,14 @@
 <script setup lang="ts">
 
 import { Pokemon } from '../@types/Pokemons';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, watch } from 'vue';
 import { RouteLocationNormalizedLoaded, useRoute, useRouter } from 'vue-router';
 
 const props = defineProps({
+    allPokemons: {
+        type: Array as () => Pokemon[],
+        required: true,
+    },
     pokemon: {
         type: Object as () => Pokemon,
     },
@@ -13,7 +17,7 @@ const props = defineProps({
     },
 });
 
-const pokemonId = ref(0 as number);
+const pokemonSlug = ref('' as string);
 
 const router = useRouter();
 const route = useRoute() as RouteLocationNormalizedLoaded;
@@ -26,29 +30,28 @@ const updatePokemonPage = (newValue: Pokemon) => {
 
 // Au chargement du composant on récupére l'id dans l'url
 onBeforeMount(() => {
-    pokemonId.value = Number(route.params.id);
-    // Si le pokemon n'existe pas dans le state, on le récupére
-    if (props.pokemon && Object.keys(props.pokemon).length === 0) {
-        getPokemonData();
-    }
+    pokemonSlug.value = route.params.slugName as string;
 })
 
+// Dès qu'on a finit de récupérer les pokemons, on récupére les données du pokemon
+watch(() => props.allPokemons, (newValue) => {
+    if (!props.pokemon || Object.keys(props.pokemon).length === 0) {
+        getPokemonData();
+    }
+});
+
 // getPokemonData permet de récupérer les données du pokemon
-const getPokemonData = async () => {
-    try {
-        const response = await fetch(`https://pokebuildapi.fr/api/v1/pokemon/${pokemonId.value}`);
-        // Si aucun pokemon n'a été trouvé on redirige vers la 404
-        if (!response.ok) {
-            router.push({ name: 'NotFound' });
-        } else {
-            const data = await response.json();
-            updatePokemonPage(data)
-        }
-    } catch (error) {
-        console.error(error);
+const getPokemonData = () => {
+    // on cherche le pokemon dans le state
+    const pokemonToShow = props.allPokemons.find((poke) => poke.slug === route.params.slugName);
+
+    // Si aucun pokemon n'a été trouvé on redirige vers la 404
+    if (!pokemonToShow) {
+        router.push({ name: 'NotFound' });
+    } else {
+        updatePokemonPage(pokemonToShow)
     }
 }
-
 </script> 
 
 <template>
