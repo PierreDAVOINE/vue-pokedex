@@ -7,7 +7,10 @@ import { RouteLocationNormalizedLoaded, useRoute, useRouter } from 'vue-router';
 const props = defineProps({
     pokemon: {
         type: Object as () => Pokemon,
-    }
+    },
+    isSearchOpen: {
+        type: Boolean as () => boolean,
+    },
 });
 
 const pokemonId = ref(0 as number);
@@ -51,7 +54,7 @@ const getPokemonData = async () => {
 <template>
     <h2 class="waiting__title" v-if="!pokemon || Object.keys(pokemon).length === 0">Récupération des informations du pokemon
         en cours</h2>
-    <div v-else class="pokemon">
+    <div v-else class="pokemon" :class="{ searchOpen: isSearchOpen }">
         <div class="pokemon__introduction">
             <h2>{{ pokemon.name }}</h2>
             <img :src="pokemon.image" :alt="pokemon.name">
@@ -113,6 +116,12 @@ const getPokemonData = async () => {
     padding: 1rem 0;
     border-right: 7px solid black;
     border-left: 7px solid black;
+    height: 68vh;
+    overflow: auto;
+
+    &.searchOpen {
+        height: 57.5vh;
+    }
 
     @media screen and (min-width: 850px) {
         width: 850px;

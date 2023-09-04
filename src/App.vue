@@ -54,7 +54,8 @@ const updateIsSearchOpen = () => {
   <div class="app">
     <Header :isSearchOpen="isSearchOpen" :inputSearch="inputSearch" @update:inputSearch="updateInputSearch"
       @update:isSearchOpen="updateIsSearchOpen" />
-    <router-view :pokemons="pokemonFiltered" :pokemon="pokemonPage" @update:pokemonPage="updatePokemonPage"></router-view>
+    <router-view :pokemons="pokemonFiltered" :pokemon="pokemonPage" @update:pokemonPage="updatePokemonPage"
+      :isSearchOpen="isSearchOpen" @update:isSearchOpen="updateIsSearchOpen"></router-view>
     <Footer />
   </div>
 </template>

@@ -1,24 +1,33 @@
 <script setup lang="ts">
 import Card from './Card.vue'
 import { Pokemon } from '../@types/Pokemons';
-defineProps({
+const props = defineProps({
     pokemons: {
         type: Array as () => Pokemon[]
+    },
+    isSearchOpen: {
+        type: Boolean as () => boolean
     }
 });
 
-const emit = defineEmits(['update:pokemonPage']);
+const emit = defineEmits(['update:pokemonPage', 'update:isSearchOpen']);
+
 const updatePokemonPage = (newValue: Pokemon) => {
+    // On met à jour le pokemon que l'on souhaite afficher en state
     emit('update:pokemonPage', newValue);
+    // Si la recherche est ouverte on la ferme
+    if (props.isSearchOpen) {
+        emit('update:isSearchOpen');
+    }
 }
 
 </script>
 
 <template>
-    <main>
+    <main :class="{ searchOpen: isSearchOpen }">
         <h2 v-if="pokemons && pokemons.length < 1">Chargement des cartes en cours</h2>
         <div v-else class="cards_container">
-            <Card v-for="pokemon in pokemons" :key="pokemon.name" :pokemon="pokemon"
+            <Card v-for="  pokemon   in   pokemons  " :key="pokemon.name" :pokemon="pokemon"
                 v-on:click="updatePokemonPage(pokemon)" />
         </div>
     </main>
@@ -44,6 +53,10 @@ main {
         font-size: 3rem;
         font-weight: 700;
     }
+}
+
+.searchOpen {
+    height: 57.5vh;
 }
 
 .cards_container {
