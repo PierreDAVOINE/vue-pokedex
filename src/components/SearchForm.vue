@@ -54,10 +54,9 @@ const handleSubmit = (event: Event) => {
 <style scoped lang="scss">
 .searchForm {
   position: relative;
-  margin: 0 auto;
   width: 100%;
   max-width: 850px;
-  padding: 1rem;
+  padding: 1rem 1rem 0 1rem;
   background-color: #ec1d23;
   border-right: 7px solid black;
   border-left: 7px solid black;

@@ -30,7 +30,7 @@ main {
     margin: 0 auto;
     text-align: center;
     overflow: scroll;
-    height: 100%;
+    height: 68vh;
     border-right: 7px solid black;
     border-left: 7px solid black;
 

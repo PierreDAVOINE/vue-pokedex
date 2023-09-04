@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
 import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
 import { Pokemon } from './@types/Pokemons';
 
 const pokemons = ref([] as Pokemon[]);
@@ -54,6 +55,7 @@ const updateIsSearchOpen = () => {
     <Header :isSearchOpen="isSearchOpen" :inputSearch="inputSearch" @update:inputSearch="updateInputSearch"
       @update:isSearchOpen="updateIsSearchOpen" />
     <router-view :pokemons="pokemonFiltered" :pokemon="pokemonPage" @update:pokemonPage="updatePokemonPage"></router-view>
+    <Footer />
   </div>
 </template>
 
@@ -61,5 +63,6 @@ const updateIsSearchOpen = () => {
 .app {
   height: 100vh;
   overflow: hidden;
+  position: relative;
 }
 </style>

@@ -56,11 +56,14 @@ const getPokemonData = async () => {
             <h2>{{ pokemon.name }}</h2>
             <img :src="pokemon.image" :alt="pokemon.name">
             <div class="types">
-                <img v-for="type in pokemon.apiTypes" :key="type.name" :src="type.image" :alt="type.name">
+                <figure v-for="type in pokemon.apiTypes">
+                    <img :key="type.name" :src="type.image" :alt="type.name">
+                    <figcaption>{{ type.name }}</figcaption>
+                </figure>
             </div>
         </div>
 
-        <div class="pokemon__ stats">
+        <div class="pokemon__stats">
             <h2>Statistiques :</h2>
             <ul>
                 <li>HP : {{ pokemon.stats.HP }}</li>
@@ -100,15 +103,16 @@ const getPokemonData = async () => {
 }
 
 .pokemon {
-    // max-width: 850px;
     width: 100%;
     margin: 0 auto;
-    background-color: rgba(218, 225, 225, 0.672);
+    background-color: #ec1d23;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
     padding: 1rem 0;
+    border-right: 7px solid black;
+    border-left: 7px solid black;
 
     @media screen and (min-width: 850px) {
         width: 850px;
@@ -117,11 +121,13 @@ const getPokemonData = async () => {
     div {
         width: 45%;
         padding: 0 1rem;
+        background-color: white;
+        border-radius: 25px;
     }
 
     h2 {
-        color: rgb(234, 38, 38);
-        font-size: 2rem;
+        color: #ec1d23;
+        font-size: 1.5rem;
         font-weight: 700;
         text-align: center;
     }
@@ -141,22 +147,58 @@ const getPokemonData = async () => {
         .types {
             display: flex;
             gap: 1rem;
+            position: relative;
+            bottom: 0.5rem;
 
-            ul {
-                display: flex;
-                gap: 1rem;
+            figure {
+                position: relative;
             }
 
             img {
                 width: 50px;
                 height: 50px;
+
+                &:hover {
+                    transform: scale(1.1);
+                    filter: drop-shadow(0 0 0.75rem black);
+                }
+            }
+
+            figcaption {
+                display: none;
+                font-size: 1.2rem;
+                font-weight: 700;
+                color: white;
+                position: absolute;
+                top: -1rem;
+                left: 50%;
+                text-shadow: 0 0 0.5rem black;
+            }
+
+            figure:hover figcaption {
+                display: block;
             }
         }
 
     }
 
+    &__stats {
+
+        ul {
+            padding: 2rem 1rem;
+        }
+
+        li {
+            text-align: center;
+            font-size: 1.2rem;
+
+        }
+    }
+
     &__evolutions {
         text-align: center;
+        padding: 2rem 1rem;
+        font-size: 1.2rem;
     }
 }
 </style>
