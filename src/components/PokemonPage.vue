@@ -9,39 +9,48 @@ const props = defineProps({
         type: Array as () => Pokemon[],
         required: true,
     },
-    pokemon: {
-        type: Object as () => Pokemon,
-    },
     isSearchOpen: {
         type: Boolean as () => boolean,
     },
 });
 
+const pokemon = ref({} as Pokemon);
 const pokemonSlug = ref('' as string);
+const previousEvolution = ref({} as Pokemon);
+const nextEvolution = ref([] as Pokemon[]);
 
 const router = useRouter();
 const route = useRoute() as RouteLocationNormalizedLoaded;
 
-// Préparation de la mise à jour du state pokemonPage
-const emit = defineEmits(['update:pokemonPage']);
-const updatePokemonPage = (newValue: Pokemon) => {
-    emit('update:pokemonPage', newValue);
-}
-
-// Au chargement du composant on récupére l'id dans l'url
+// Au chargement du composant on récupére le slug du pokemon
 onBeforeMount(() => {
     pokemonSlug.value = route.params.slugName as string;
-})
-
-// Dès qu'on a finit de récupérer les pokemons, on récupére les données du pokemon
-watch(() => props.allPokemons, (newValue) => {
-    if (!props.pokemon || Object.keys(props.pokemon).length === 0) {
+    if (props.allPokemons.length > 0) {
         getPokemonData();
     }
 });
 
+// Dès qu'on a finit de récupérer les pokemons, on récupére les données du pokemon
+watch(() => props.allPokemons, () => {
+    if (Object.keys(pokemon.value).length === 0) {
+        getPokemonData();
+    }
+});
+
+// Dès qu'on change de route
+watch(() => route.params.slugName, () => {
+    // On reset les evoluations
+    previousEvolution.value = {} as Pokemon;
+    nextEvolution.value = [] as Pokemon[];
+    // Et on récupére les données du pokemon
+    pokemonSlug.value = route.params.slugName as string;
+    getPokemonData();
+});
+
 // getPokemonData permet de récupérer les données du pokemon
 const getPokemonData = () => {
+    console.log("getPokemonData");
+
     // on cherche le pokemon dans le state
     const pokemonToShow = props.allPokemons.find((poke) => poke.slug === route.params.slugName);
 
@@ -49,7 +58,27 @@ const getPokemonData = () => {
     if (!pokemonToShow) {
         router.push({ name: 'NotFound' });
     } else {
-        updatePokemonPage(pokemonToShow)
+        // On met à jour le state pokemonPage
+        // updatePokemonPage(pokemonToShow)
+        pokemon.value = pokemonToShow;
+
+        // On récupére les données de la pré-évolution
+        if (pokemonToShow.apiPreEvolution) {
+            const previousEvolutionToShow = props.allPokemons.find((poke) => poke.name === pokemonToShow.apiPreEvolution.name);
+            if (previousEvolutionToShow) {
+                previousEvolution.value = previousEvolutionToShow;
+            }
+        }
+
+        // On récupére les données de la prochaine évolution
+        if (pokemonToShow.apiEvolutions.length > 0) {
+            pokemonToShow.apiEvolutions.forEach((evolution) => {
+                const nextEvolutionToShow = props.allPokemons.find((poke) => poke.name === evolution.name);
+                if (nextEvolutionToShow) {
+                    nextEvolution.value.push(nextEvolutionToShow);
+                }
+            });
+        }
     }
 }
 </script> 
@@ -83,17 +112,23 @@ const getPokemonData = () => {
 
         <div class="pokemon__evolutions">
             <h2>Pré évolution :</h2>
-            <ul v-if="pokemon.apiPreEvolution">
-                <li>{{ pokemon.apiPreEvolution.name }}</li>
+            <ul v-if="previousEvolution.name">
+                <li><router-link :to="{ name: 'pokemon', params: { slugName: previousEvolution.slug } }">{{
+                    previousEvolution.name }}</router-link>
+                </li>
             </ul>
             <p v-else>Aucune pré-évolution</p>
         </div>
 
         <div class="pokemon__evolutions">
             <h2>Evolution :</h2>
-            <ul v-if="pokemon.apiEvolutions">
-                <li v-for="evolution in pokemon.apiEvolutions" :key="evolution.name">{{ evolution.name }}</li>
-            </ul>
+            <div v-if="nextEvolution.length > 0">
+                <ul v-for="evolution of nextEvolution">
+                    <li><router-link :to="{ name: 'pokemon', params: { slugName: evolution.slug } }">{{
+                        evolution.name
+                    }}</router-link></li>
+                </ul>
+            </div>
             <p v-else>Aucune évolution</p>
         </div>
 

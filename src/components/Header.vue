@@ -38,8 +38,6 @@ const handleOpenSearch = () => {
         <h1>Pokedex with Vue JS</h1>
       </router-link>
     </div>
-
-    <!-- TODO: trouver un moyen de d'adoucir la transition -->
     <SearchForm v-if="isSearchOpen" :inputSearch="props.inputSearch" @update:inputSearch="updateInputSearch"
       :isSearchOpen="isSearchOpen" />
   </header>

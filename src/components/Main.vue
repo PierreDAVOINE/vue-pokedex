@@ -10,25 +10,21 @@ const props = defineProps({
     }
 });
 
-const emit = defineEmits(['update:pokemonPage', 'update:isSearchOpen']);
+const emit = defineEmits(['update:isSearchOpen']);
 
-const updatePokemonPage = (newValue: Pokemon) => {
-    // On met à jour le pokemon que l'on souhaite afficher en state
-    emit('update:pokemonPage', newValue);
+const handleCloseSearch = () => {
     // Si la recherche est ouverte on la ferme
     if (props.isSearchOpen) {
         emit('update:isSearchOpen');
     }
 }
-
 </script>
 
 <template>
     <main :class="{ searchOpen: isSearchOpen }">
         <h2 v-if="pokemons && pokemons.length < 1">Chargement des cartes en cours</h2>
         <div v-else class="cards_container">
-            <Card v-for="  pokemon   in   pokemons  " :key="pokemon.name" :pokemon="pokemon"
-                v-on:click="updatePokemonPage(pokemon)" />
+            <Card v-for="  pokemon   in   pokemons  " :key="pokemon.name" :pokemon="pokemon" @click="handleCloseSearch" />
         </div>
     </main>
 </template>

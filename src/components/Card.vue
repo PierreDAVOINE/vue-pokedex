@@ -6,12 +6,10 @@ defineProps({
         required: true
     }
 });
-
-
 </script> 
 
 <template>
-    <router-link class="card" :to="{ name: 'pokemon', params: { slugName: pokemon.slug, id: pokemon.id } }">
+    <router-link class="card" :to="{ name: 'pokemon', params: { slugName: pokemon.slug } }">
         <img :src="pokemon.image" :alt="pokemon.name">
         <h2>{{ pokemon.name }}</h2>
         <div class="card__types">
