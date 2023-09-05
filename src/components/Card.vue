@@ -28,7 +28,7 @@ defineProps({
     background-color: #eaeaea;
     border-radius: 10px;
     box-shadow: 0 3px 15px rgba(100, 100, 100, 0.2);
-    padding: 1rem;
+    padding: 0.5rem 1rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -74,8 +74,8 @@ defineProps({
         }
 
         img {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
 
             &:hover {
                 transform: scale(1.1);

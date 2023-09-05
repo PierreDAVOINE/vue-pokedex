@@ -47,7 +47,7 @@ const handleOpenSearch = () => {
 
 <style scoped lang="scss">
 header {
-  max-width: 850px;
+  max-width: 700px;
   margin: 0 auto;
   position: relative;
 
@@ -128,10 +128,6 @@ header {
   @media screen and (min-width: 705px) {
     background: no-repeat url(/img/header.png) center top /cover, #ec1d23;
     height: 144px;
-  }
-
-  @media screen and (min-width: 850px) {
-    width: 850px;
   }
 }
 </style>

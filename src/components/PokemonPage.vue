@@ -109,7 +109,7 @@ const getPokemonData = () => {
 }
 
 .pokemon {
-    width: 100%;
+    max-width: 700px;
     margin: 0 auto;
     background-color: #ec1d23;
     display: flex;
@@ -124,10 +124,6 @@ const getPokemonData = () => {
 
     &.searchOpen {
         height: 57.5vh;
-    }
-
-    @media screen and (min-width: 850px) {
-        width: 850px;
     }
 
     div {

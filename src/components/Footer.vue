@@ -16,7 +16,7 @@
 <style scoped lang="scss">
 footer {
     height: 10vh;
-    max-width: 850px;
+    max-width: 700px;
     margin: 0 auto;
 }
 
