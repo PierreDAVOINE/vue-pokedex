@@ -35,7 +35,7 @@ const handleOpenSearch = () => {
     </button>
     <div class="header_bg">
       <router-link class="card" to="/">
-        <h1>Pokedex with Vue JS</h1>
+        <h1>Pokedex</h1>
       </router-link>
     </div>
     <SearchForm v-if="isSearchOpen" :inputSearch="props.inputSearch" @update:inputSearch="updateInputSearch"

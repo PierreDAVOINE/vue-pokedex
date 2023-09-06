@@ -10,10 +10,11 @@ const props = defineProps({
     }
 });
 
-const emit = defineEmits(['update:isSearchOpen']);
+const emit = defineEmits(['update:isSearchOpen', 'update:inputSearch']);
 
 const handleCloseSearch = () => {
     // Si la recherche est ouverte on la ferme
+    emit('update:inputSearch', '')
     if (props.isSearchOpen) {
         emit('update:isSearchOpen');
     }
