@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import SearchForm from './SearchForm.vue';
+import { RouteLocationNormalizedLoaded, useRoute } from 'vue-router';
+
+const route = useRoute() as RouteLocationNormalizedLoaded;
 
 // On récupére la props inputSearch
 const props = defineProps({
@@ -30,16 +33,24 @@ const handleOpenSearch = () => {
 
 <template>
   <header>
-    <button class="button__search" @click="handleOpenSearch">
+
+    <router-link v-if="route.params.slugName" class="button__home" to="/">
+      <img src="../assets/home.png" alt="Accueil">
+    </router-link>
+
+    <button v-else class="button__search" @click="handleOpenSearch">
       <img src="../assets/glass.png" alt="Recherche">
     </button>
+
     <div class="header_bg">
       <router-link class="card" to="/">
         <h1>Pokedex</h1>
       </router-link>
     </div>
+
     <SearchForm v-if="isSearchOpen" :inputSearch="props.inputSearch" @update:inputSearch="updateInputSearch"
       :isSearchOpen="isSearchOpen" />
+
   </header>
 </template>
 
@@ -68,12 +79,13 @@ header {
     }
   }
 
-  .button__search {
+  .button__search,
+  .button__home {
     background: none;
     border: none;
     position: absolute;
-    top: 4.5rem;
-    left: 27%;
+    top: 5rem;
+    right: 5%;
     cursor: pointer;
     z-index: 10;
 
@@ -100,6 +112,11 @@ header {
         height: 3rem;
       }
     }
+
+  }
+
+  .button__search {
+    right: 20%;
   }
 }
 
