@@ -70,6 +70,7 @@ const handleResetIdPokemonAnchor = () => {
 
 <style scoped lang="scss">
 header {
+  width: 100vw;
   max-width: 700px;
   margin: 0 auto;
   position: relative;
@@ -99,7 +100,7 @@ header {
     background: none;
     border: none;
     position: absolute;
-    top: 5rem;
+    top: 2.5rem;
     right: 5%;
     cursor: pointer;
     z-index: 10;
@@ -115,6 +116,8 @@ header {
     }
 
     @media screen and (min-width: 500px) {
+      top: 4rem;
+
       img {
         width: 2.5rem;
         height: 2.5rem;
@@ -122,6 +125,8 @@ header {
     }
 
     @media screen and (min-width: 700px) {
+      top: 5rem;
+
       img {
         width: 3rem;
         height: 3rem;

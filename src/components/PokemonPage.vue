@@ -101,7 +101,7 @@ const getPokemonData = () => {
         </div>
 
         <div class="pokemon__stats">
-            <h2>Statistiques :</h2>
+            <h2>Statistiques</h2>
             <ul>
                 <li>HP : {{ pokemon.stats.HP }}</li>
                 <li>Attaque : {{ pokemon.stats.attack }}</li>
@@ -113,7 +113,7 @@ const getPokemonData = () => {
         </div>
 
         <div class="pokemon__evolutions">
-            <h2>Pré évolution :</h2>
+            <h2>Pré évolution</h2>
             <ul v-if="previousEvolution.name">
                 <li><router-link :to="{ name: 'pokemon', params: { slugName: previousEvolution.slug } }">{{
                     previousEvolution.name }}</router-link>
@@ -123,7 +123,7 @@ const getPokemonData = () => {
         </div>
 
         <div class="pokemon__evolutions">
-            <h2>Evolution :</h2>
+            <h2>Evolution</h2>
             <div v-if="nextEvolution.length > 0">
                 <ul v-for="evolution of nextEvolution">
                     <li><router-link :to="{ name: 'pokemon', params: { slugName: evolution.slug } }">{{
@@ -146,18 +146,28 @@ const getPokemonData = () => {
 }
 
 .pokemon {
+    width: 100vw;
     max-width: 700px;
     margin: 0 auto;
     background-color: #ec1d23;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-content: baseline;
     gap: 1rem;
     padding: 1rem 0;
     border-right: 7px solid black;
     border-left: 7px solid black;
-    height: 68vh;
+    height: 79.5vh;
     overflow: auto;
+
+    @media screen and (min-width: 451px) {
+        height: 75vh;
+    }
+
+    @media screen and (min-width: 620px) {
+        height: 71vh;
+    }
 
     &.searchOpen {
         height: 57.5vh;
@@ -168,6 +178,7 @@ const getPokemonData = () => {
         padding: 0 1rem;
         background-color: white;
         border-radius: 25px;
+        max-height: 18rem;
     }
 
     h2 {
@@ -175,6 +186,48 @@ const getPokemonData = () => {
         font-size: 1.5rem;
         font-weight: 700;
         text-align: center;
+    }
+
+    &__stats {
+
+        ul {
+            padding: 2rem 1rem;
+        }
+
+        li {
+            text-align: center;
+            font-size: 1.2rem;
+
+        }
+    }
+
+    &__evolutions {
+        // text-align: center;
+        padding: 2rem 1rem;
+        font-size: 1.2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        ul,
+        p {
+            padding: 2rem 0;
+        }
+
+        li {
+            list-style: none;
+            transition: 0.1s ease-in-out;
+
+            &:hover {
+                transform: scale(1.1);
+            }
+
+            a {
+                color: black;
+
+            }
+        }
     }
 
     &__introduction {
@@ -227,23 +280,6 @@ const getPokemonData = () => {
 
     }
 
-    &__stats {
 
-        ul {
-            padding: 2rem 1rem;
-        }
-
-        li {
-            text-align: center;
-            font-size: 1.2rem;
-
-        }
-    }
-
-    &__evolutions {
-        text-align: center;
-        padding: 2rem 1rem;
-        font-size: 1.2rem;
-    }
 }
 </style>

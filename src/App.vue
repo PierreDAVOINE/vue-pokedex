@@ -66,5 +66,9 @@ const updateIdPokemonAnchor = (id: number) => {
   height: 100vh;
   overflow: hidden;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
 }
 </style>

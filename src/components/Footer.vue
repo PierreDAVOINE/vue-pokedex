@@ -15,6 +15,7 @@
 
 <style scoped lang="scss">
 footer {
+    width: 100vw;
     height: 10vh;
     max-width: 700px;
     margin: 0 auto;
@@ -34,11 +35,11 @@ footer {
     border-right: 7px solid black;
     border-left: 7px solid black;
 
-
     p {
         color: white;
         font-size: 1rem;
         font-weight: 700;
+        width: 70%;
     }
 
     img {

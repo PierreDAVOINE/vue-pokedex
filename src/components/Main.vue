@@ -61,11 +61,12 @@ const autoScroll = () => {
 
 <style scoped lang="scss">
 main {
+    width: 100vw;
     max-width: 700px;
     margin: 0 auto;
     text-align: center;
-    overflow: scroll;
-    height: 68vh;
+    overflow-y: scroll;
+    height: 79.5vh;
     border-right: 7px solid black;
     border-left: 7px solid black;
     overscroll-behavior-y: none;
@@ -74,6 +75,14 @@ main {
         color: rgb(189, 0, 222);
         font-size: 3rem;
         font-weight: 700;
+    }
+
+    @media screen and (min-width: 451px) {
+        height: 75vh;
+    }
+
+    @media screen and (min-width: 620px) {
+        height: 71vh;
     }
 }
 
