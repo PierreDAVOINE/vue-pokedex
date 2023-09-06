@@ -10,43 +10,35 @@ const props = defineProps({
     }
 });
 
-const emit = defineEmits(['update:pokemonPage', 'update:isSearchOpen']);
+const emit = defineEmits(['update:isSearchOpen', 'update:inputSearch']);
 
-const updatePokemonPage = (newValue: Pokemon) => {
-    // On met à jour le pokemon que l'on souhaite afficher en state
-    emit('update:pokemonPage', newValue);
+const handleCloseSearch = () => {
     // Si la recherche est ouverte on la ferme
+    emit('update:inputSearch', '')
     if (props.isSearchOpen) {
         emit('update:isSearchOpen');
     }
 }
-
 </script>
 
 <template>
     <main :class="{ searchOpen: isSearchOpen }">
         <h2 v-if="pokemons && pokemons.length < 1">Chargement des cartes en cours</h2>
         <div v-else class="cards_container">
-            <Card v-for="  pokemon   in   pokemons  " :key="pokemon.name" :pokemon="pokemon"
-                v-on:click="updatePokemonPage(pokemon)" />
+            <Card v-for="  pokemon   in   pokemons  " :key="pokemon.name" :pokemon="pokemon" @click="handleCloseSearch" />
         </div>
     </main>
 </template>
 
 <style scoped lang="scss">
 main {
-    width: 100%;
+    max-width: 700px;
     margin: 0 auto;
     text-align: center;
     overflow: scroll;
     height: 68vh;
     border-right: 7px solid black;
     border-left: 7px solid black;
-
-    @media screen and (min-width: 850px) {
-        width: 850px;
-    }
-
 
     h2 {
         color: rgb(189, 0, 222);
@@ -61,7 +53,7 @@ main {
 
 .cards_container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     grid-gap: 1rem;
     padding: 1rem;
     margin: 0 auto;

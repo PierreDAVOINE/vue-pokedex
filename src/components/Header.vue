@@ -35,11 +35,9 @@ const handleOpenSearch = () => {
     </button>
     <div class="header_bg">
       <router-link class="card" to="/">
-        <h1>Pokedex with Vue JS</h1>
+        <h1>Pokedex</h1>
       </router-link>
     </div>
-
-    <!-- TODO: trouver un moyen de d'adoucir la transition -->
     <SearchForm v-if="isSearchOpen" :inputSearch="props.inputSearch" @update:inputSearch="updateInputSearch"
       :isSearchOpen="isSearchOpen" />
   </header>
@@ -47,7 +45,7 @@ const handleOpenSearch = () => {
 
 <style scoped lang="scss">
 header {
-  max-width: 850px;
+  max-width: 700px;
   margin: 0 auto;
   position: relative;
 
@@ -128,10 +126,6 @@ header {
   @media screen and (min-width: 705px) {
     background: no-repeat url(/img/header.png) center top /cover, #ec1d23;
     height: 144px;
-  }
-
-  @media screen and (min-width: 850px) {
-    width: 850px;
   }
 }
 </style>

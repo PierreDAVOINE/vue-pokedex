@@ -5,7 +5,7 @@
 <template>
     <footer>
         <div class="footer_bg">
-            <p>© 2023 - Pokedex with Vue JS</p>
+            <p>Pierre Davoine - Pokedex with Vue JS - 2023</p>
             <a href="https://github.com/PierreDAVOINE/vue-pokedex">
                 <img src="../assets/github-logo.png" alt="Github">
             </a>
@@ -16,7 +16,7 @@
 <style scoped lang="scss">
 footer {
     height: 10vh;
-    max-width: 850px;
+    max-width: 700px;
     margin: 0 auto;
 }
 
@@ -37,7 +37,7 @@ footer {
 
     p {
         color: white;
-        font-size: 0.8rem;
+        font-size: 1rem;
         font-weight: 700;
     }
 

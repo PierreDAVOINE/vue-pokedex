@@ -7,7 +7,6 @@ import { Pokemon } from './@types/Pokemons';
 const pokemons = ref([] as Pokemon[]);
 const inputSearch = ref('' as string);
 const pokemonFiltered = ref([] as Pokemon[]);
-const pokemonPage = ref({} as Pokemon);
 const isSearchOpen = ref(false);
 
 const getPokemons = async () => {
@@ -40,10 +39,6 @@ const updateInputSearch = (newValue: string) => {
   inputSearch.value = newValue;
 }
 
-const updatePokemonPage = (newValue: Pokemon) => {
-  pokemonPage.value = newValue;
-}
-
 const updateIsSearchOpen = () => {
   isSearchOpen.value = !isSearchOpen.value;
 }
@@ -54,8 +49,8 @@ const updateIsSearchOpen = () => {
   <div class="app">
     <Header :isSearchOpen="isSearchOpen" :inputSearch="inputSearch" @update:inputSearch="updateInputSearch"
       @update:isSearchOpen="updateIsSearchOpen" />
-    <router-view :pokemons="pokemonFiltered" :pokemon="pokemonPage" @update:pokemonPage="updatePokemonPage"
-      :isSearchOpen="isSearchOpen" @update:isSearchOpen="updateIsSearchOpen"></router-view>
+    <router-view :allPokemons="pokemons" :pokemons="pokemonFiltered" :isSearchOpen="isSearchOpen"
+      @update:isSearchOpen="updateIsSearchOpen" @update:inputSearch="updateInputSearch"></router-view>
     <Footer />
   </div>
 </template>

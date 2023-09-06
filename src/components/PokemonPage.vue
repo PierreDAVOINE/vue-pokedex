@@ -1,54 +1,86 @@
 <script setup lang="ts">
 
 import { Pokemon } from '../@types/Pokemons';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, watch } from 'vue';
 import { RouteLocationNormalizedLoaded, useRoute, useRouter } from 'vue-router';
 
 const props = defineProps({
-    pokemon: {
-        type: Object as () => Pokemon,
+    allPokemons: {
+        type: Array as () => Pokemon[],
+        required: true,
     },
     isSearchOpen: {
         type: Boolean as () => boolean,
     },
 });
 
-const pokemonId = ref(0 as number);
+const pokemon = ref({} as Pokemon);
+const pokemonSlug = ref('' as string);
+const previousEvolution = ref({} as Pokemon);
+const nextEvolution = ref([] as Pokemon[]);
 
 const router = useRouter();
 const route = useRoute() as RouteLocationNormalizedLoaded;
 
-// Préparation de la mise à jour du state pokemonPage
-const emit = defineEmits(['update:pokemonPage']);
-const updatePokemonPage = (newValue: Pokemon) => {
-    emit('update:pokemonPage', newValue);
-}
-
-// Au chargement du composant on récupére l'id dans l'url
+// Au chargement du composant on récupére le slug du pokemon
 onBeforeMount(() => {
-    pokemonId.value = Number(route.params.id);
-    // Si le pokemon n'existe pas dans le state, on le récupére
-    if (props.pokemon && Object.keys(props.pokemon).length === 0) {
+    pokemonSlug.value = route.params.slugName as string;
+    if (props.allPokemons.length > 0) {
         getPokemonData();
     }
-})
+});
+
+// Dès qu'on a finit de récupérer les pokemons, on récupére les données du pokemon
+watch(() => props.allPokemons, () => {
+    if (Object.keys(pokemon.value).length === 0) {
+        getPokemonData();
+    }
+});
+
+// Dès qu'on change de route
+watch(() => route.params.slugName, () => {
+    // On reset les evoluations
+    previousEvolution.value = {} as Pokemon;
+    nextEvolution.value = [] as Pokemon[];
+    // Et on récupére les données du pokemon
+    pokemonSlug.value = route.params.slugName as string;
+    getPokemonData();
+});
 
 // getPokemonData permet de récupérer les données du pokemon
-const getPokemonData = async () => {
-    try {
-        const response = await fetch(`https://pokebuildapi.fr/api/v1/pokemon/${pokemonId.value}`);
-        // Si aucun pokemon n'a été trouvé on redirige vers la 404
-        if (!response.ok) {
-            router.push({ name: 'NotFound' });
-        } else {
-            const data = await response.json();
-            updatePokemonPage(data)
+const getPokemonData = () => {
+    console.log("getPokemonData");
+
+    // on cherche le pokemon dans le state
+    const pokemonToShow = props.allPokemons.find((poke) => poke.slug === route.params.slugName);
+
+    // Si aucun pokemon n'a été trouvé on redirige vers la 404
+    if (!pokemonToShow) {
+        router.push({ name: 'NotFound' });
+    } else {
+        // On met à jour le state pokemonPage
+        // updatePokemonPage(pokemonToShow)
+        pokemon.value = pokemonToShow;
+
+        // On récupére les données de la pré-évolution
+        if (pokemonToShow.apiPreEvolution) {
+            const previousEvolutionToShow = props.allPokemons.find((poke) => poke.name === pokemonToShow.apiPreEvolution.name);
+            if (previousEvolutionToShow) {
+                previousEvolution.value = previousEvolutionToShow;
+            }
         }
-    } catch (error) {
-        console.error(error);
+
+        // On récupére les données de la prochaine évolution
+        if (pokemonToShow.apiEvolutions.length > 0) {
+            pokemonToShow.apiEvolutions.forEach((evolution) => {
+                const nextEvolutionToShow = props.allPokemons.find((poke) => poke.name === evolution.name);
+                if (nextEvolutionToShow) {
+                    nextEvolution.value.push(nextEvolutionToShow);
+                }
+            });
+        }
     }
 }
-
 </script> 
 
 <template>
@@ -80,17 +112,23 @@ const getPokemonData = async () => {
 
         <div class="pokemon__evolutions">
             <h2>Pré évolution :</h2>
-            <ul v-if="pokemon.apiPreEvolution">
-                <li>{{ pokemon.apiPreEvolution.name }}</li>
+            <ul v-if="previousEvolution.name">
+                <li><router-link :to="{ name: 'pokemon', params: { slugName: previousEvolution.slug } }">{{
+                    previousEvolution.name }}</router-link>
+                </li>
             </ul>
             <p v-else>Aucune pré-évolution</p>
         </div>
 
         <div class="pokemon__evolutions">
             <h2>Evolution :</h2>
-            <ul v-if="pokemon.apiEvolutions">
-                <li v-for="evolution in pokemon.apiEvolutions" :key="evolution.name">{{ evolution.name }}</li>
-            </ul>
+            <div v-if="nextEvolution.length > 0">
+                <ul v-for="evolution of nextEvolution">
+                    <li><router-link :to="{ name: 'pokemon', params: { slugName: evolution.slug } }">{{
+                        evolution.name
+                    }}</router-link></li>
+                </ul>
+            </div>
             <p v-else>Aucune évolution</p>
         </div>
 
@@ -106,7 +144,7 @@ const getPokemonData = async () => {
 }
 
 .pokemon {
-    width: 100%;
+    max-width: 700px;
     margin: 0 auto;
     background-color: #ec1d23;
     display: flex;
@@ -121,10 +159,6 @@ const getPokemonData = async () => {
 
     &.searchOpen {
         height: 57.5vh;
-    }
-
-    @media screen and (min-width: 850px) {
-        width: 850px;
     }
 
     div {

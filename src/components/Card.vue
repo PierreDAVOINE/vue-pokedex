@@ -6,12 +6,10 @@ defineProps({
         required: true
     }
 });
-
-
 </script> 
 
 <template>
-    <router-link class="card" :to="{ name: 'pokemon', params: { slugName: pokemon.slug, id: pokemon.id } }">
+    <router-link class="card" :to="{ name: 'pokemon', params: { slugName: pokemon.slug } }">
         <img :src="pokemon.image" :alt="pokemon.name">
         <h2>{{ pokemon.name }}</h2>
         <div class="card__types">
@@ -28,7 +26,7 @@ defineProps({
     background-color: #eaeaea;
     border-radius: 10px;
     box-shadow: 0 3px 15px rgba(100, 100, 100, 0.2);
-    padding: 1rem;
+    padding: 0.5rem 1rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -74,8 +72,8 @@ defineProps({
         }
 
         img {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
 
             &:hover {
                 transform: scale(1.1);
@@ -90,7 +88,7 @@ defineProps({
             color: white;
             position: absolute;
             top: -1rem;
-            left: 50%;
+            left: -0.5rem;
             text-shadow: 0 0 0.5rem black;
         }
 
