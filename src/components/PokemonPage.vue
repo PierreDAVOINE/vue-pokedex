@@ -4,6 +4,9 @@ import { Pokemon } from '../@types/Pokemons';
 import { onBeforeMount, ref, watch } from 'vue';
 import { RouteLocationNormalizedLoaded, useRoute, useRouter } from 'vue-router';
 
+const router = useRouter();
+const route = useRoute() as RouteLocationNormalizedLoaded;
+
 const props = defineProps({
     allPokemons: {
         type: Array as () => Pokemon[],
@@ -19,8 +22,7 @@ const pokemonSlug = ref('' as string);
 const previousEvolution = ref({} as Pokemon);
 const nextEvolution = ref([] as Pokemon[]);
 
-const router = useRouter();
-const route = useRoute() as RouteLocationNormalizedLoaded;
+const emit = defineEmits(['update:idPokemonAnchor']);
 
 // Au chargement du composant on récupére le slug du pokemon
 onBeforeMount(() => {
@@ -49,8 +51,6 @@ watch(() => route.params.slugName, () => {
 
 // getPokemonData permet de récupérer les données du pokemon
 const getPokemonData = () => {
-    console.log("getPokemonData");
-
     // on cherche le pokemon dans le state
     const pokemonToShow = props.allPokemons.find((poke) => poke.slug === route.params.slugName);
 
@@ -59,8 +59,10 @@ const getPokemonData = () => {
         router.push({ name: 'NotFound' });
     } else {
         // On met à jour le state pokemonPage
-        // updatePokemonPage(pokemonToShow)
         pokemon.value = pokemonToShow;
+
+        // On met à jour l'id de l'ancre pour le retour à la page d'accueil
+        emit('update:idPokemonAnchor', pokemonToShow.id);
 
         // On récupére les données de la pré-évolution
         if (pokemonToShow.apiPreEvolution) {

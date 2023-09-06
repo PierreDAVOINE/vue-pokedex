@@ -9,11 +9,11 @@ defineProps({
 </script> 
 
 <template>
-    <router-link class="card" :to="{ name: 'pokemon', params: { slugName: pokemon.slug } }">
+    <router-link :id="pokemon.id" class="card" :to="{ name: 'pokemon', params: { slugName: pokemon.slug } }">
         <img :src="pokemon.image" :alt="pokemon.name">
         <h2>{{ pokemon.name }}</h2>
         <div class="card__types">
-            <figure v-for="type in pokemon.apiTypes">
+            <figure v-for=" type  in  pokemon.apiTypes ">
                 <img :key="type.name" :src="type.image" :alt="type.name">
                 <figcaption>{{ type.name }}</figcaption>
             </figure>

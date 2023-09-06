@@ -13,12 +13,12 @@ const props = defineProps({
   isSearchOpen: {
     type: Boolean,
     required: true,
-  },
+  }
 });
 
 // emit permet d'envoyer un événement au parent
 // ici on fait le relais entre le composant searchForm et le composant App
-const emit = defineEmits(['update:inputSearch', 'update:isSearchOpen']);
+const emit = defineEmits(['update:inputSearch', 'update:isSearchOpen', 'update:idPokemonAnchor']);
 
 const updateInputSearch = (newValue: string) => {
   // Dès qu'on détecte un changement dans l'input on fait remonter l'info plus haut
@@ -29,6 +29,15 @@ const handleOpenSearch = () => {
   emit('update:isSearchOpen');
   emit('update:inputSearch', "");
 }
+
+const handleResetIdPokemonAnchor = () => {
+  emit('update:idPokemonAnchor', 1);
+  // On Séléctionne le conteneur de carte et on le force à remonter au top
+  const pokemonContainer = document.getElementById('pokemon-container');
+  if (pokemonContainer) {
+    pokemonContainer.scrollTop = 0;
+  }
+}
 </script>
 
 <template>
@@ -38,9 +47,14 @@ const handleOpenSearch = () => {
       <img src="../assets/home.png" alt="Accueil">
     </router-link>
 
-    <button v-else class="button__search" @click="handleOpenSearch">
-      <img src="../assets/glass.png" alt="Recherche">
-    </button>
+    <div v-else>
+      <button class="button__search" @click="handleOpenSearch">
+        <img src="../assets/glass.png" alt="Recherche">
+      </button>
+      <button class="button__top" @click="handleResetIdPokemonAnchor">
+        <img src="../assets/top.png" alt="Retour au début">
+      </button>
+    </div>
 
     <div class="header_bg">
       <router-link class="card" to="/">
@@ -80,6 +94,7 @@ header {
   }
 
   .button__search,
+  .button__top,
   .button__home {
     background: none;
     border: none;
@@ -117,6 +132,10 @@ header {
 
   .button__search {
     right: 20%;
+  }
+
+  .button__top {
+    right: 5%;
   }
 }
 

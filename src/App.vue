@@ -8,6 +8,7 @@ const pokemons = ref([] as Pokemon[]);
 const inputSearch = ref('' as string);
 const pokemonFiltered = ref([] as Pokemon[]);
 const isSearchOpen = ref(false);
+const idPokemonAnchor = ref(1);
 
 const getPokemons = async () => {
   try {
@@ -43,14 +44,19 @@ const updateIsSearchOpen = () => {
   isSearchOpen.value = !isSearchOpen.value;
 }
 
+const updateIdPokemonAnchor = (id: number) => {
+  idPokemonAnchor.value = id;
+}
+
 </script>
 
 <template>
   <div class="app">
     <Header :isSearchOpen="isSearchOpen" :inputSearch="inputSearch" @update:inputSearch="updateInputSearch"
-      @update:isSearchOpen="updateIsSearchOpen" />
+      @update:isSearchOpen="updateIsSearchOpen" @update:idPokemonAnchor="updateIdPokemonAnchor" />
     <router-view :allPokemons="pokemons" :pokemons="pokemonFiltered" :isSearchOpen="isSearchOpen"
-      @update:isSearchOpen="updateIsSearchOpen" @update:inputSearch="updateInputSearch"></router-view>
+      @update:isSearchOpen="updateIsSearchOpen" @update:inputSearch="updateInputSearch" :idPokemonAnchor="idPokemonAnchor"
+      @update:idPokemonAnchor="updateIdPokemonAnchor"></router-view>
     <Footer />
   </div>
 </template>
