@@ -42,8 +42,8 @@ const handleResetIdPokemonAnchor = () => {
 
 <template>
   <header>
-
-    <router-link v-if="route.params.slugName" class="button__home" to="/">
+    <!-- si on est sur la page pokemon ou sur une 404, on affiche le bouton home -->
+    <router-link v-if="route.params.slugName || route.path === '/404'" class="button__home" to="/">
       <img src="../assets/home.png" alt="Accueil">
     </router-link>
 
