@@ -3,6 +3,7 @@
 import { Pokemon } from '../@types/Pokemons';
 import { onBeforeMount, ref, watch } from 'vue';
 import { RouteLocationNormalizedLoaded, useRoute, useRouter } from 'vue-router';
+import Loading from './Loading.vue';
 
 const router = useRouter();
 const route = useRoute() as RouteLocationNormalizedLoaded;
@@ -86,58 +87,89 @@ const getPokemonData = () => {
 </script> 
 
 <template>
-    <h2 class="waiting__title" v-if="!pokemon || Object.keys(pokemon).length === 0">Récupération des informations du pokemon
-        en cours</h2>
-    <div v-else class="pokemon" :class="{ searchOpen: isSearchOpen }">
-        <div class="pokemon__introduction">
-            <h2>{{ pokemon.name }}</h2>
-            <img :src="pokemon.image" :alt="pokemon.name">
-            <div class="types">
-                <figure v-for="type in pokemon.apiTypes">
-                    <img :key="type.name" :src="type.image" :alt="type.name">
-                    <figcaption>{{ type.name }}</figcaption>
-                </figure>
+    <main>
+        <Loading v-if="!pokemon || Object.keys(pokemon).length === 0" />
+        <div v-else class="pokemon" :class="{ searchOpen: isSearchOpen }">
+            <div class="pokemon__introduction">
+                <h2>{{ pokemon.name }}</h2>
+                <img :src="pokemon.image" :alt="pokemon.name">
+                <div class="types">
+                    <figure v-for="type in pokemon.apiTypes">
+                        <img :key="type.name" :src="type.image" :alt="type.name">
+                        <figcaption>{{ type.name }}</figcaption>
+                    </figure>
+                </div>
             </div>
-        </div>
 
-        <div class="pokemon__stats">
-            <h2>Statistiques</h2>
-            <ul>
-                <li>HP : {{ pokemon.stats.HP }}</li>
-                <li>Attaque : {{ pokemon.stats.attack }}</li>
-                <li>Defense : {{ pokemon.stats.defense }}</li>
-                <li>SPE-attaque : {{ pokemon.stats.special_attack }}</li>
-                <li>SPE-defense : {{ pokemon.stats.special_defense }}</li>
-                <li>Vitesse : {{ pokemon.stats.speed }}</li>
-            </ul>
-        </div>
-
-        <div class="pokemon__evolutions">
-            <h2>Pré évolution</h2>
-            <ul v-if="previousEvolution.name">
-                <li><router-link :to="{ name: 'pokemon', params: { slugName: previousEvolution.slug } }">{{
-                    previousEvolution.name }}</router-link>
-                </li>
-            </ul>
-            <p v-else>Aucune pré-évolution</p>
-        </div>
-
-        <div class="pokemon__evolutions">
-            <h2>Evolution</h2>
-            <div v-if="nextEvolution.length > 0">
-                <ul v-for="evolution of nextEvolution">
-                    <li><router-link :to="{ name: 'pokemon', params: { slugName: evolution.slug } }">{{
-                        evolution.name
-                    }}</router-link></li>
+            <div class="pokemon__stats">
+                <h2>Statistiques</h2>
+                <ul>
+                    <li>HP : {{ pokemon.stats.HP }}</li>
+                    <li>Attaque : {{ pokemon.stats.attack }}</li>
+                    <li>Defense : {{ pokemon.stats.defense }}</li>
+                    <li>SPE-attaque : {{ pokemon.stats.special_attack }}</li>
+                    <li>SPE-defense : {{ pokemon.stats.special_defense }}</li>
+                    <li>Vitesse : {{ pokemon.stats.speed }}</li>
                 </ul>
             </div>
-            <p v-else>Aucune évolution</p>
+
+            <div class="pokemon__evolutions">
+                <h2>Pré évolution</h2>
+                <ul v-if="previousEvolution.name">
+                    <li><router-link :to="{ name: 'pokemon', params: { slugName: previousEvolution.slug } }">{{
+                        previousEvolution.name }}</router-link>
+                    </li>
+                </ul>
+                <p v-else>Aucune pré-évolution</p>
+            </div>
+
+            <div class="pokemon__evolutions">
+                <h2>Evolution</h2>
+                <div v-if="nextEvolution.length > 0">
+                    <ul v-for="evolution of nextEvolution">
+                        <li><router-link :to="{ name: 'pokemon', params: { slugName: evolution.slug } }">{{
+                            evolution.name
+                        }}</router-link></li>
+                    </ul>
+                </div>
+                <p v-else>Aucune évolution</p>
+            </div>
+
         </div>
 
-    </div>
+    </main>
 </template>
 
 <style scoped lang="scss">
+main {
+    width: 100vw;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+    height: 79.5vh;
+    border-right: 7px solid black;
+    border-left: 7px solid black;
+    background-color: #ec1d23;
+    position: relative;
+    overflow-y: scroll;
+    overflow-x: none;
+    overscroll-behavior-y: none;
+
+    h2 {
+        color: rgb(189, 0, 222);
+        font-size: 3rem;
+        font-weight: 700;
+    }
+
+    @media screen and (min-width: 451px) {
+        height: 75vh;
+    }
+
+    @media screen and (min-width: 620px) {
+        height: 71vh;
+    }
+}
+
 .waiting__title {
     color: rgb(189, 0, 222);
     font-size: 3rem;
@@ -146,20 +178,14 @@ const getPokemonData = () => {
 }
 
 .pokemon {
-    width: 100vw;
-    max-width: 700px;
     margin: 0 auto;
-    background-color: #ec1d23;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-content: baseline;
     gap: 1rem;
     padding: 1rem 0;
-    border-right: 7px solid black;
-    border-left: 7px solid black;
     height: 79.5vh;
-    overflow: auto;
 
     @media screen and (min-width: 451px) {
         height: 75vh;

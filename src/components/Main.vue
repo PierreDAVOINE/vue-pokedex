@@ -2,6 +2,7 @@
 import Card from './Card.vue'
 import { Pokemon } from '../@types/Pokemons';
 import { onMounted } from 'vue';
+import Loading from './Loading.vue';
 const props = defineProps({
     pokemons: {
         type: Array as () => Pokemon[]
@@ -52,7 +53,7 @@ const autoScroll = () => {
 
 <template>
     <main id="pokemon-container" :class="{ searchOpen: isSearchOpen }">
-        <h2 v-if="pokemons && pokemons.length < 1">Chargement des cartes en cours</h2>
+        <Loading v-if="pokemons && pokemons.length < 1" />
         <div v-else class="cards_container">
             <Card v-for="  pokemon   in   pokemons  " :key="pokemon.name" :pokemon="pokemon" @click="handleCloseSearch" />
         </div>
@@ -70,6 +71,8 @@ main {
     border-right: 7px solid black;
     border-left: 7px solid black;
     overscroll-behavior-y: none;
+    background-color: #ec1d23;
+    position: relative;
 
     h2 {
         color: rgb(189, 0, 222);
@@ -97,6 +100,5 @@ main {
     padding: 1rem;
     margin: 0 auto;
     width: 100%;
-    background-color: #ec1d23;
 }
 </style>

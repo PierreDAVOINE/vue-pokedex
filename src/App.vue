@@ -12,8 +12,8 @@ const idPokemonAnchor = ref(1);
 
 const getPokemons = async () => {
   try {
-    const response = await fetch('https://pokebuildapi.fr/api/v1/pokemon/limit/152');
-    // const response = await fetch('https://pokebuildapi.fr/api/v1/pokemon');
+    // const response = await fetch('https://pokebuildapi.fr/api/v1/pokemon/limit/152');
+    const response = await fetch('https://pokebuildapi.fr/api/v1/pokemon');
     const data = await response.json();
     pokemons.value = data;
     pokemonFiltered.value = data;
