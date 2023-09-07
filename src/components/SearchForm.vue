@@ -56,7 +56,7 @@ const handleSubmit = (event: Event) => {
   position: relative;
   width: 100%;
   max-width: 850px;
-  padding: 1rem 1rem 0 1rem;
+  padding: 0.8rem 1rem 0.5rem 1rem;
   background-color: #ec1d23;
   border-right: 7px solid black;
   border-left: 7px solid black;

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
-import Header from './components/Header.vue'
-import Footer from './components/Footer.vue'
+import { onMounted, ref, watch } from 'vue';
+import Header from './components/Header.vue';
+import Footer from './components/Footer.vue';
 import { Pokemon } from './@types/Pokemons';
 
 const pokemons = ref([] as Pokemon[]);

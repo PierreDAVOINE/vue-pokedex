@@ -37,9 +37,9 @@ footer {
 
     p {
         color: white;
-        font-size: 1rem;
+        font-size: 0.8rem;
         font-weight: 700;
-        width: 70%;
+        width: 85%;
     }
 
     img {

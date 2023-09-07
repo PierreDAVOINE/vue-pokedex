@@ -67,7 +67,7 @@ main {
     margin: 0 auto;
     text-align: center;
     overflow-y: scroll;
-    height: 79.5vh;
+    height: 75vh;
     border-right: 7px solid black;
     border-left: 7px solid black;
     overscroll-behavior-y: none;
@@ -80,17 +80,13 @@ main {
         font-weight: 700;
     }
 
-    @media screen and (min-width: 451px) {
-        height: 75vh;
-    }
-
     @media screen and (min-width: 620px) {
         height: 71vh;
     }
 }
 
 .searchOpen {
-    height: 57.5vh;
+    height: 67.5vh;
 }
 
 .cards_container {
