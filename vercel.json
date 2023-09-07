@@ -1,0 +1,12 @@
+{
+    "rewrites": [
+        {
+            "source": "/pokemon/:slugName",
+            "destination": "/pokemon/:slugName"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/"
+        }
+    ]
+}
