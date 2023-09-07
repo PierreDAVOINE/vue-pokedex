@@ -184,8 +184,8 @@ main {
     justify-content: center;
     align-content: baseline;
     gap: 1rem;
-    padding: 1rem 0;
     height: 79.5vh;
+    padding: 1rem 0;
 
     @media screen and (min-width: 451px) {
         height: 75vh;
@@ -200,11 +200,14 @@ main {
     }
 
     div {
-        width: 45%;
-        padding: 0 1rem;
+        width: 90%;
         background-color: white;
         border-radius: 25px;
         max-height: 18rem;
+
+        @media screen and (min-width: 400px) {
+            width: 45%;
+        }
     }
 
     h2 {
@@ -217,18 +220,16 @@ main {
     &__stats {
 
         ul {
-            padding: 2rem 1rem;
+            padding: 2rem 0;
         }
 
         li {
             text-align: center;
             font-size: 1.2rem;
-
         }
     }
 
     &__evolutions {
-        // text-align: center;
         padding: 2rem 1rem;
         font-size: 1.2rem;
         display: flex;
@@ -270,6 +271,7 @@ main {
 
         .types {
             display: flex;
+            justify-content: center;
             gap: 1rem;
             position: relative;
             bottom: 0.5rem;
