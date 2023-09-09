@@ -5,7 +5,7 @@
 <template>
     <footer>
         <div class="footer_bg">
-            <p>Pierre Davoine - Pokedex with Vue JS - 2023</p>
+            <p>Pierre Davoine - Pokédex with Vue.js - 2023</p>
             <a href="https://github.com/PierreDAVOINE/vue-pokedex">
                 <img src="../assets/github-logo.png" alt="Github">
             </a>
@@ -40,11 +40,20 @@ footer {
         font-size: 0.8rem;
         font-weight: 700;
         width: 85%;
+
+        @media screen and (min-width: 400px) {
+            font-size: 1.5rem;
+        }
     }
 
     img {
         width: 2rem;
         height: 2rem;
+
+        @media screen and (min-width: 400px) {
+            width: 3rem;
+            height: 3rem;
+        }
     }
 }
 </style>

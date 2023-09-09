@@ -58,7 +58,7 @@ const handleResetIdPokemonAnchor = () => {
 
     <div class="header_bg">
       <router-link class="card" to="/">
-        <h1>Pokedex</h1>
+        <h1>Pokédex</h1>
       </router-link>
     </div>
 
